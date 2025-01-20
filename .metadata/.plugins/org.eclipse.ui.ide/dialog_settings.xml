@@ -33,4 +33,6 @@
 		<item value="org.sonatype.m2e.egit.feature:0.17.0.202209271423"/>
 		<item value="org.testng.eclipse:7.10.0.202404131040"/>
 	</list>
+	<section name="NewWizardAction">
+	</section>
 </section>
