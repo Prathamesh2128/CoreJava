@@ -3,13 +3,16 @@ import entity.Developer;
 import entity.Employee;
 import entity.Manager;
 import entity.Tester;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
-
 import static seeder.EmployeeSeeder.*;
 
 public class App {
@@ -29,8 +32,8 @@ public class App {
                         + "7. View All Developer\n"
                         + "8. View All Tester\n"
                         + "9. Sort by ID\n"
-                        + "10. Sort by Name ASC\n"
-                        + "11. Sort by Name DES\n"
+                        + "10. Sort by Name by Stream\n"
+                        + "11. Sort by Name by Traditional\n"
                         + "12. Sort by Salary ASC\n"
                         + "13. Sort by Salary DES\n"
                         + "14. Sort by Department ASC\n"
@@ -106,16 +109,32 @@ public class App {
                     case 10 -> {
                         System.out.println("***** Sorted by Name *****");
 
-                        LinkedHashMap<Integer, String> sorted
-                                = empMap.entrySet()
-                                        .stream()
-                                        .sorted(Map.Entry.comparingByValue())
-                                        .collect(Collectors.toMap(
-                                                Map.Entry::getKey,
-                                                Map.Entry::getValue,
-                                                (e1, e2) -> e1,
-                                                LinkedHashMap::new
-                                        ));
+                        Map<Integer, Employee> sortedMap = empMap.entrySet()
+                                .stream()
+                                .sorted(Comparator.comparing(entry -> entry.getValue().getName()))
+                                .collect(Collectors.toMap(
+                                        Map.Entry::getKey, Map.Entry::getValue,
+                                        (o1, o2) -> o1,
+                                        LinkedHashMap::new
+                                ));
+
+                        sortedMap.forEach((k, v) -> System.out.println(v));
+                    }
+
+                    case 11 -> {
+                        List<Map.Entry<Integer, Employee>> empList = new LinkedList<>(empMap.entrySet());
+                        Collections.sort(empList, (o1, o2) -> {
+                            return o1.getValue().getName().compareTo(o2.getValue().getName());
+                        });
+
+                        Map<Integer, Employee> sortedMapEmp = new LinkedHashMap<>();
+                        for (Map.Entry<Integer, Employee> entry : empList) {
+                            sortedMapEmp.put(entry.getKey(), entry.getValue());
+                        }
+
+                        sortedMapEmp.forEach((k, v) -> {
+                            System.out.println(v);
+                        });
                     }
 
                     default ->
@@ -123,6 +142,7 @@ public class App {
                 }
             }
         } catch (Exception e) {
+            System.out.println("error : " + e);
         }
     }
 }
