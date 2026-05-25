@@ -1,17 +1,6 @@
 
-import entity.Developer;
-import entity.Employee;
-import entity.Manager;
-import entity.Tester;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
+import entity.*;
+import java.util.*;
 import java.util.stream.Collectors;
 import static seeder.EmployeeSeeder.*;
 
@@ -34,10 +23,10 @@ public class App {
                         + "9. Sort by ID\n"
                         + "10. Sort by Name by Stream\n"
                         + "11. Sort by Name by Traditional\n"
-                        + "12. Sort by Salary ASC\n"
-                        + "13. Sort by Salary DES\n"
-                        + "14. Sort by Department ASC\n"
-                        + "15. Sort by Department DES\n"
+                        + "12. Sort by Salary Stream\n"
+                        + "13. Sort by Salary Traditional\n"
+                        + "14. Sort by Department Stream\n"
+                        + "15. Sort by Department Traditional\n"
                         + "16. Sort by Team size\n"
                         + "17. Search by ID\n"
                         + "18. Search by Name\n"
@@ -108,7 +97,6 @@ public class App {
 
                     case 10 -> {
                         System.out.println("***** Sorted by Name *****");
-
                         Map<Integer, Employee> sortedMap = empMap.entrySet()
                                 .stream()
                                 .sorted(Comparator.comparing(entry -> entry.getValue().getName()))
@@ -122,6 +110,7 @@ public class App {
                     }
 
                     case 11 -> {
+                        System.out.println("***** Sorted by Name *****");
                         List<Map.Entry<Integer, Employee>> empList = new LinkedList<>(empMap.entrySet());
                         Collections.sort(empList, (o1, o2) -> {
                             return o1.getValue().getName().compareTo(o2.getValue().getName());
@@ -135,6 +124,81 @@ public class App {
                         sortedMapEmp.forEach((k, v) -> {
                             System.out.println(v);
                         });
+                    }
+
+                    case 12 -> {
+                        System.out.println("***** Sorted by Salary *****");
+                        empMap.entrySet()
+                                .stream()
+                                .sorted(Comparator.comparing((Map.Entry< Integer, Employee> entry) -> entry.getValue().getSalary()).reversed())
+                                .forEach(entry -> System.out.println(entry.getValue()));
+                    }
+
+                    case 13 -> {
+                        System.out.println("***** Sorted by Salary *****");
+                        List<Map.Entry<Integer, Employee>> empList = new LinkedList<>(empMap.entrySet());
+                        empList.sort(Comparator.comparing(entry -> entry.getValue().getSalary()));
+
+                        Map<Integer, Employee> sortedMap = new LinkedHashMap<>();
+                        for (Map.Entry<Integer, Employee> entry : empList) {
+                            sortedMap.put(entry.getKey(), entry.getValue());
+                        }
+
+                        sortedMap.forEach((k, v) -> System.out.println(v));
+                    }
+
+                    case 14 -> {
+                        System.out.println("***** Sorted by Department *****");
+                        empMap.entrySet()
+                                .stream()
+                                .sorted(Comparator.comparing((Map.Entry<Integer, Employee> entry) -> entry.getValue().getDepartment()).reversed())
+                                .forEach(entry -> System.out.println(entry.getValue()));
+                    }
+
+                    case 15 -> {
+                        System.out.println("***** Sorted by Department *****");
+                        List<Map.Entry<Integer, Employee>> empList = new LinkedList<>(empMap.entrySet());
+                        empList.sort(Comparator.comparing((Map.Entry<Integer, Employee> entry) -> entry.getValue().getDepartment()).reversed());
+
+                        Map<Integer, Employee> sortedMap = new LinkedHashMap<>();
+                        for (Map.Entry<Integer, Employee> entry : empList) {
+                            sortedMap.put(entry.getKey(), entry.getValue());
+                        }
+
+                        sortedMap.forEach((k, v) -> System.out.println(v));
+                    }
+
+                    case 16 -> {
+                        System.out.println("***** Sort by Team size *****");
+
+                    }
+
+                    case 17 -> {
+                        System.out.println("***** Search by ID *****");
+                        System.out.println("Enter Id :: ");
+                        int id = sc.nextInt();
+
+                        System.out.println(empMap.get(id));
+                    }
+
+                    case 18 -> {
+                        System.out.println("***** Search by Name *****");
+
+                    }
+
+                    case 19 -> {
+                        System.out.println("***** Remove by Name *****");
+
+                    }
+
+                    case 20 -> {
+                        System.out.println("***** Remove by Department Name *****");
+
+                    }
+
+                    case 21 -> {
+                        System.out.println("***** Remove by ID *****");
+
                     }
 
                     default ->
