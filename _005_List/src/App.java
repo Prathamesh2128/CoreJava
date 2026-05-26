@@ -35,6 +35,7 @@ public class App {
                         + "18. Search by Name\n"
                         + "19. Remove by Name\n"
                         + "20. Remove by ID\n"
+                        + "21. Edit name\n"
                         + "0. Exit"
                 );
                 int operation = sc.nextInt();
@@ -111,7 +112,12 @@ public class App {
                     case 17 -> {
                         System.out.println("Enter Id :: ");
                         int target = sc.nextInt();
-                        searchById(empList, target);
+                        Employee emp = searchById(empList, target);
+                        if (emp != null) {
+                            System.out.println(emp);
+                        } else {
+                            System.out.println("Employee Id not found!!!");
+                        }
                     }
 
                     case 18 -> {
@@ -130,6 +136,17 @@ public class App {
                         System.out.println("Enter Id :: ");
                         int target = sc.nextInt();
                         removeById(empList, target);
+                    }
+
+                    case 21 -> {
+                        int target = sc.nextInt();
+                        Employee emp = searchById(empList, target);
+                        if (emp != null) {
+                            String name = sc.next();
+                            updateEmployeeName(emp, name);
+                        } else {
+                            System.out.println("Employee Id not found!!!");
+                        }
                     }
 
                     case 0 -> {

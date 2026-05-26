@@ -92,12 +92,13 @@ public class EmployeeUtility {
         getAllEmployees(empList);
     }
 
-    public static void searchById(List<Employee> empList, int target) {
-        empList.forEach(emp -> {
+    public static Employee searchById(List<Employee> empList, int target) {
+        for (Employee emp : empList) {
             if (emp.getId() == target) {
-                System.out.println(emp);
+                return emp;
             }
-        });
+        }
+        return null;
     }
 
     public static void searchByName(List<Employee> empList, String target) {
@@ -116,7 +117,12 @@ public class EmployeeUtility {
 
     public static void removeById(List<Employee> empList, int target) {
         empList.removeIf(emp -> emp.getId() == target);
-        
+
         getAllEmployees(empList);
+    }
+
+    public static void updateEmployeeName(Employee emp, String name) {
+        emp.setName(name);
+        System.out.println(emp);
     }
 }
