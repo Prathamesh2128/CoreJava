@@ -183,22 +183,43 @@ public class App {
 
                     case 18 -> {
                         System.out.println("***** Search by Name *****");
+                        System.out.println("Enter Name :: ");
 
+                        String name = sc.next();
+                        empMap.forEach((k, v) -> {
+                            if (v.getName().equals(name)) {
+                                System.out.println(v);
+                            }
+                        });
                     }
 
                     case 19 -> {
                         System.out.println("***** Remove by Name *****");
+                        System.out.println("Enter Name :: ");
 
+                        String name = sc.next();
+                        empMap.entrySet().removeIf(entry -> entry.getValue().getName().equals(name));
+
+                        empMap.forEach((k, v) -> System.out.println(v));
                     }
 
                     case 20 -> {
-                        System.out.println("***** Remove by Department Name *****");
+                        System.out.println("Enter department :: ");
 
+                        String department = sc.next();
+                        System.out.println("***** Remove by Department Name *****");
+                        empMap.entrySet().removeIf(entry -> entry.getValue().getDepartment().equals(department));
+
+                        empMap.forEach((k, v) -> System.out.println(v));
                     }
 
                     case 21 -> {
                         System.out.println("***** Remove by ID *****");
+                        System.out.println("Enter Id :: ");
+                        int id = sc.nextInt();
+                        empMap.remove(id);
 
+                        empMap.forEach((k, v) -> System.out.println(v));
                     }
 
                     default ->
